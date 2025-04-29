@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package twopc;
+
+
+service TwoPC {
+  rpc Vote(VoteRequest) returns (VoteReply);
+}
+
+message VoteRequest {
+  string transaction_id = 1;
+}
+
+message VoteReply {
+    enum Decision {
+        VOTE_COMMIT = 0;
+        VOTE_ABORT = 1;
+    }
+    Decision decision = 1;
+    string replica_id = 2;
+}
+

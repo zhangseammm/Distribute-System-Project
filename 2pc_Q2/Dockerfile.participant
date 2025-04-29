@@ -1,0 +1,40 @@
+FROM golang:1.21 AS builder-go
+WORKDIR /app
+# copy proto
+COPY voting.proto .
+# generate Go stubs
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
+    && go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest \
+    && protoc --go_out=. --go-grpc_out=. voting.proto
+
+# copy and build decision participant
+COPY decision_participant.go .
+RUN go build -o decision_participant .
+
+# ----- final image -----
+FROM python:3.9-slim
+WORKDIR /app
+
+# install Python gRPC for voting phase
+RUN pip install grpcio grpcio-tools
+
+# bring in Python voting phase code (from Q1)
+COPY voting.proto .
+COPY participant.py .
+RUN python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. voting.proto
+
+# bring in Go binary
+COPY --from=builder-go /app/decision_participant .
+# expose both ports
+EXPOSE 50052 60052
+
+# node-specific env (override in Compose)
+ENV PORT=50052
+ENV DEC_PORT=60052
+ENV NODE_ID=P1
+
+# start both services
+CMD ["bash","-lc", "\
+  python participant.py & \
+  ./decision_participant --port=$DEC_PORT --id=$NODE_ID \
+"]

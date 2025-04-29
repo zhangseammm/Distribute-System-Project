@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+
+  coordinator:
+    build: .
+    environment:
+      - ROLE=coordinator
+      - NAME=coord1
+      - PARTICIPANTS=part1:50051:50061,part2:50051:50061,part3:50051:50061,part4:50051:50061,part5:50051:50061
+    depends_on:
+      - part1
+      - part2
+      - part3
+      - part4
+      - part5
+
+  part1:
+    build: .
+    environment:
+      - ROLE=participant
+      - NAME=part1
+      - DECISION_PORT=50061
+
+  part2:
+    build: .
+    environment:
+      - ROLE=participant
+      - NAME=part2
+      - DECISION_PORT=50061
+
+  part3:
+    build: .
+    environment:
+      - ROLE=participant
+      - NAME=part3
+      - DECISION_PORT=50061
+
+  part4:
+    build: .
+    environment:
+      - ROLE=participant
+      - NAME=part4
+      - DECISION_PORT=50061
+
+  part5:
+    build: .
+    environment:
+      - ROLE=participant
+      - NAME=part5
+      - DECISION_PORT=50061

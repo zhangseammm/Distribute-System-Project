@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  node1:
+    build: .
+    environment:
+      - NODE_ID=node1
+      - LEADER_ID=node1
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000
+    ports:
+      - "5001:5000"
+
+  node2:
+    build: .
+    environment:
+      - NODE_ID=node2
+      - LEADER_ID=node1
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000
+    ports:
+      - "5002:5000"
+  node3:
+    build: .
+    environment:
+      - NODE_ID=node3
+      - LEADER_ID=node1
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000
+    ports:
+      - "5003:5000"
+
+  node4:
+    build: .
+    environment:
+      - NODE_ID=node4
+      - LEADER_ID=node1
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000
+    ports:
+      - "5004:5000"
+
+  node5:
+    build: .
+    environment:
+      - NODE_ID=node5
+      - LEADER_ID=node1
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000
+    ports:
+      - "5005:5000"

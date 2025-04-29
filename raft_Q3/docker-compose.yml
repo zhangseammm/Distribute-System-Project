@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  node1:
+    build: .
+    environment:
+      - NODE_ID=node1
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000
+
+  node2:
+    build: .
+    environment:
+      - NODE_ID=node2
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000
+
+  node3:
+    build: .
+    environment:
+      - NODE_ID=node3
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000
+
+  node4:
+    build: .
+    environment:
+      - NODE_ID=node4
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000
+
+  node5:
+    build: .
+    environment:
+      - NODE_ID=node5
+      - PEERS=node1:node1:5000,node2:node2:5000,node3:node3:5000,node4:node4:5000,node5:node5:5000

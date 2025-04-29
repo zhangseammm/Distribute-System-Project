@@ -1,0 +1,48 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  coordinator:
+    build: .
+    container_name: coordinator
+    environment:
+      - ROLE=coordinator
+      # List of participant gRPC endpoints:
+      - PARTICIPANTS=p1:50051,p2:50052,p3:50053,p4:50054
+    depends_on:
+      - p1
+      - p2
+      - p3
+      - p4
+
+  p1:
+    build: .
+    container_name: p1
+    environment:
+      - ROLE=participant
+      - REPLICA_ID=p1
+      - PORT=50051
+
+  p2:
+    build: .
+    container_name: p2
+    environment:
+      - ROLE=participant
+      - REPLICA_ID=p2
+      - PORT=50052
+
+  p3:
+    build: .
+    container_name: p3
+    environment:
+      - ROLE=participant
+      - REPLICA_ID=p3
+      - PORT=50053
+
+  p4:
+    build: .
+    container_name: p4
+    environment:
+      - ROLE=participant
+      - REPLICA_ID=p4
+      - PORT=50054

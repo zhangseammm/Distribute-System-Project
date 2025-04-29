@@ -1,0 +1,40 @@
+syntax = "proto3";
+package twopc;
+
+// ─── Voting phase ──────────────────────────────────────────────────────────────
+message VoteRequest {
+  string transaction_id = 1;
+}
+message VoteResponse {
+  enum Vote {
+    COMMIT = 0;
+    ABORT  = 1;
+  }
+  Vote vote = 1;
+}
+
+// ─── Decision phase ───────────────────────────────────────────────────────────
+message DecisionRequest {
+  string    transaction_id = 1;
+  enum Decision {
+    COMMIT = 0;
+    ABORT  = 1;
+  }
+  Decision decision = 2;
+}
+message DecisionAck {
+  bool success = 1;
+}
+
+// ─── Services ─────────────────────────────────────────────────────────────────
+service Participant {
+  // implemented in Python (voting‐phase)
+  rpc Vote(VoteRequest) returns (VoteResponse);
+  // implemented in Python (applies final decision)
+  rpc GlobalDecision(DecisionRequest) returns (DecisionAck);
+}
+
+service DecisionParticipant {
+  // implemented in Node.js (decision‐phase)
+  rpc Decide(DecisionRequest) returns (DecisionAck);
+}

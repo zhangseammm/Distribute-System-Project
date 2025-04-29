@@ -1,0 +1,7 @@
+{
+    "name": "two_pc",
+    "dependencies": {
+      "@grpc/grpc-js": "^1.4.5",
+      "@grpc/proto-loader": "^0.7.5"
+    }
+  }

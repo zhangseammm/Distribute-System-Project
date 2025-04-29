@@ -1,0 +1,8 @@
+{
+    "name": "raft-log-node",
+    "version": "1.0.0",
+    "dependencies": {
+      "@grpc/grpc-js": "^1.4.5",
+      "@grpc/proto-loader": "^0.7.5"
+    }
+  }
