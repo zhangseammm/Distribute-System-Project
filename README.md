@@ -1,4 +1,4 @@
-## All docker containers have been warpped up.
+## All docker containers have been wrapped up.
 
 1. Implement the voting phase of 2PC, using python
 
